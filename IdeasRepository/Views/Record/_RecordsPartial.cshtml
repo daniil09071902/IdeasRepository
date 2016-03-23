@@ -1,0 +1,48 @@
+﻿@using IdeasRepository.Models
+@model System.Collections.Generic.IEnumerable<Record>
+
+<div id="records">
+    @foreach (var record in Model)
+    {
+        <fieldset>
+            
+            @if (User.IsInRole("User") && record.Status.Equals(RecordStatus.RemovedByUser))
+            {
+                continue;
+            }
+            
+            <input type="hidden" id="recordId" value="@record.Id" />
+            <input type="hidden" id="authorId" value="@record.AuthorId" /> 
+            <textarea id="edit_note" rows="2" cols="100">@record.Text</textarea>
+            <label id="creationDate"> Last Update: @record.UpdateDate Created By: @record.Author.Email</label>
+            <br />
+            <input id="update" type="button" value="Update" onclick="updateRecord(event)"/>
+            
+            @if (record.Status.Equals(RecordStatus.Normal))
+            {
+                <input id="delete" type="button" value="Delete" onclick="deleteRecord(event)"/>
+                continue;
+            }
+            
+            @if (record.Status.Equals(RecordStatus.RemovedByUser))
+            {
+                <input id="restore" type="button" value="Restore" onclick="restoreRecord(event)"/>
+                <input id="delete" type="button" value="Delete" onclick="deleteRecord(event)"/>
+                continue;
+            }
+            
+            @if (record.Status.Equals(RecordStatus.RemovedByAdmin))
+            {
+                if (record.Author.Email.Equals(User.Identity.Name))
+                {
+                    <input id="confirmDeletion" type="button" value="Confirm Deletion" onclick="confirmRecordDeletion(event)"/> 
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    <label>Deletion has been uncomfirmed yet</label>
+                }
+            }
+                
+        </fieldset>
+    }
+</div>

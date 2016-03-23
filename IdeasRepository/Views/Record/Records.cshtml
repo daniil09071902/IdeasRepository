@@ -1,0 +1,19 @@
+﻿@model System.Collections.Generic.IEnumerable<IdeasRepository.Models.Record>
+@{
+    ViewBag.Title = "Records";
+}
+
+
+<h2>Records</h2>
+<input type="hidden" value="@Request.RawUrl"/>
+@Html.Partial("_RecordsPartial", Model)
+
+<h2>Add new record</h2>
+<fieldset>
+    <label id="label_new_note">Please enter your note:</label>
+    <br />
+    <textarea id="new_note" rows="4"></textarea>
+    <br />
+    <input id="save" type="button" value="Add Record" onclick="saveRecord()"/>
+</fieldset>
+
