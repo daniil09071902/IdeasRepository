@@ -10,6 +10,7 @@ using System.Web.Mvc;
 namespace IdeasRepository.Controllers
 {
     [Authorize]
+    [RecordErrorHandler]
     public class RecordController : Controller
     {
         private IRecordService recordService;
@@ -20,7 +21,6 @@ namespace IdeasRepository.Controllers
         }
 
         [HttpPost]
-        [RecordErrorHandler]
         public ActionResult Save(Record record) 
         {
             recordService.Save(record, User.Identity.Name);
@@ -28,7 +28,6 @@ namespace IdeasRepository.Controllers
         }
 
         [HttpPut]
-        [RecordErrorHandler]
         public ActionResult Update(Record record)
         {
             recordService.Update(record);
@@ -36,7 +35,6 @@ namespace IdeasRepository.Controllers
         }
 
         [HttpDelete]
-        [RecordErrorHandler]
         public ActionResult Delete(int recordId) 
         {
             recordService.Delete(recordId, User.Identity.Name);
@@ -44,7 +42,6 @@ namespace IdeasRepository.Controllers
         }
 
         [HttpDelete]
-        [RecordErrorHandler]
         public ActionResult ConfirmDeletion(int recordId)
         {
             recordService.Delete(recordId, User.Identity.Name);
@@ -52,7 +49,6 @@ namespace IdeasRepository.Controllers
         }
 
         [HttpPut]
-        [RecordErrorHandler]
         [Authorize(Roles = "Admin")]
         public ActionResult Restore(int recordId)
         {
@@ -75,6 +71,7 @@ namespace IdeasRepository.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult GetRecords()
         {
+            
             IEnumerable<Record> records = recordService.GetRecords();
             if (Request.IsAjaxRequest())
             {
