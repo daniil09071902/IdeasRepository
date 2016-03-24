@@ -15,15 +15,15 @@ namespace IdeasRepository.Filters
             {
                 filterContext.HttpContext.Response.StatusCode = 500;
                 filterContext.ExceptionHandled = true;
-                String errorMessage = "Error has occured during database request.";
+                String message = "Error has occured during database request.";
                 if(request.HttpMethod.Equals("GET")) {
-                    errorMessage += "Can't load Data";
+                    message += "Can't load Data";
                 }
                 filterContext.Result = new JsonResult
                 {
                     Data = new
                     {
-                        ErrorMessage = "Error has occured during database request."
+                        errorMessage = message
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
