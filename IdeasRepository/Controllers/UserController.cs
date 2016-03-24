@@ -44,11 +44,6 @@ namespace IdeasRepository.Controllers
             return RedirectToAction("ShowLoginPage");
         }
 
-        public ActionResult Error() 
-        {
-            return View();
-        }
-
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Register(User user) 
